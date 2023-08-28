@@ -1,6 +1,7 @@
 package com.example.springboot3jwtsecuritydemo.domain.model
 
 import com.example.springboot3jwtsecuritydemo.domain.enums.Role
+import com.example.springboot3jwtsecuritydemo.domain.enums.getAuthorities
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
@@ -33,7 +34,7 @@ data class User(
     val tokens: List<Token> = emptyList()
 ) : UserDetails {
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf(role.name.toAuthority())
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = role.getAuthorities().toMutableList()
 
     override fun getPassword(): String = password
 
@@ -46,8 +47,4 @@ data class User(
     override fun isCredentialsNonExpired(): Boolean = true
 
     override fun isEnabled(): Boolean = true
-}
-
-fun String.toAuthority(): GrantedAuthority {
-    return SimpleGrantedAuthority("ROLE_$this")
 }

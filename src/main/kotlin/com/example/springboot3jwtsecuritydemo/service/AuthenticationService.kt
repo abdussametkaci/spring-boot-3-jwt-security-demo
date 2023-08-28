@@ -34,7 +34,7 @@ class AuthenticationService(
                 surname = surname,
                 email = email,
                 password = passwordEncoder.encode(password),
-                role = Role.USER
+                role = role
             )
         }
 
